@@ -1,23 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { addUser, fetchUsersBegin } from "./redux/users/usersActions";
 
 function App() {
+  const users = useSelector((state) => state.users);
+  const dispatch = useDispatch();
+  const [name, setName] = useState("");
+
+  const onAddNameClick = () => {
+    const newUser = { name, id: Math.random() };
+    dispatch(addUser(newUser));
+    setName("");
+  };
+
+  useEffect(() => {
+    dispatch(fetchUsersBegin());
+  }, []);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {users && users.map((user) => <p key={user.id}>{user.name}</p>)}
+      <input
+        type="text"
+        placeholder="Enter name..."
+        onChange={(e) => setName(e.target.value)}
+        value={name}
+      />
+      <button onClick={onAddNameClick}>Add</button>
     </div>
   );
 }
