@@ -14,10 +14,15 @@ const User = ({ user, onDeleteClick, setName }) => {
   };
 
   return (
-    <div>
-      {user.name}
-      <button onClick={() => onDeleteClick(user)}>X</button>{" "}
-      <button onClick={() => setOpenDialog((isOpen) => !isOpen)}>
+    <div className="mt-3 d-flex align-items-center justify-content-center ">
+      <button className="btn btn-danger" onClick={() => onDeleteClick(user)}>
+        X
+      </button>{" "}
+      <span className="mr-2 p-3">{user.name}</span>
+      <button
+        className="btn btn-info"
+        onClick={() => setOpenDialog((isOpen) => !isOpen)}
+      >
         {openDialog ? "cancel" : "edit"}
       </button>
       {openDialog && (
@@ -27,8 +32,11 @@ const User = ({ user, onDeleteClick, setName }) => {
             placeholder="enter new name"
             onChange={(e) => setEdit(e.target.value)}
             value={edit}
+            className="mx-2 "
           />
-          <button onClick={onEditClick}>save</button>
+          <button onClick={onEditClick} className="btn btn-secondary btn-sm">
+            save
+          </button>
         </>
       )}
     </div>

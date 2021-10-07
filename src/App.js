@@ -37,8 +37,11 @@ function App() {
         placeholder="Enter name..."
         onChange={(e) => setName(e.target.value)}
         value={name}
+        class="form-control w-25 mt-2 mb-2 m-auto"
       />
-      <button onClick={onAddNameClick}>Add</button>
+      <button onClick={onAddNameClick} class="btn btn-primary ml-2">
+        Add
+      </button>
     </div>
   );
 }
