@@ -1,9 +1,10 @@
 import { takeEvery, call, put } from "redux-saga/effects";
 import {
-  addUser,
+  REMOVE_USER,
   ADD_USER,
   fetchUsersSuccess,
   FETCH_USERS_BEGIN,
+  UPDATE_USER,
 } from "../redux/users/usersActions";
 
 //worker sagas
@@ -16,9 +17,29 @@ export function* loadUsers() {
 }
 
 export function* addUserWorker(action) {
-  console.log(action.payload);
   yield call(fetch, "http://localhost:3000/users", {
     method: "POST",
+    body: JSON.stringify(action.payload),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
+export function* removeUserWorker(action) {
+  const id = action.payload.id.toString();
+
+  yield call(fetch, `http://localhost:3000/users/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
+export function* updateUserWorker(action) {
+  yield call(fetch, `http://localhost:3000/users/${action.payload.id}`, {
+    method: "PUT",
     body: JSON.stringify(action.payload),
     headers: {
       "Content-Type": "application/json",
@@ -33,4 +54,12 @@ export function* watchLoadUsers() {
 
 export function* watchAddUser() {
   yield takeEvery(ADD_USER, addUserWorker);
+}
+
+export function* watchRemoveUser() {
+  yield takeEvery(REMOVE_USER, removeUserWorker);
+}
+
+export function* watchUpdateUser() {
+  yield takeEvery(UPDATE_USER, updateUserWorker);
 }
