@@ -12,8 +12,11 @@ export function* loadUsers() {
   const response = yield call(fetch, "http://localhost:3000/users");
 
   const users = yield response.json();
-  console.log(users);
-  yield put(fetchUsersSuccess(users));
+  try {
+    yield put(fetchUsersSuccess(users));
+  } catch (error) {
+    console.log("error");
+  }
 }
 
 export function* addUserWorker(action) {

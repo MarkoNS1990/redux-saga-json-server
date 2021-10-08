@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateUser } from "../redux/users/usersActions";
 const User = ({ user, onDeleteClick, setName }) => {
-  const [edit, setEdit] = useState("");
+  const [edit, setEdit] = useState(user.name);
   const [openDialog, setOpenDialog] = useState(false);
   const dispatch = useDispatch();
 
   const onEditClick = () => {
     const editedUser = { ...user, name: edit };
     dispatch(updateUser(editedUser));
-    setEdit("");
+    setEdit(editedUser.name);
     setOpenDialog((isOpen) => !isOpen);
   };
 
